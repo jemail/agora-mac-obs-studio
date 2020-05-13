@@ -65,6 +65,7 @@ endif()
 
 set_target_properties(graphics-hook
 	PROPERTIES
+		FOLDER "plugins/win-capture"
 		OUTPUT_NAME "graphics-hook${_output_suffix}")
 
 if (VULKAN_FOUND)
