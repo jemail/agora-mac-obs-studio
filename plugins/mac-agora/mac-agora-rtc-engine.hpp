@@ -32,7 +32,7 @@ public:
     FILE *pfile;
 
     void enableVideo();
-    void joinChannel(const char *id, const char *uid, const char *token, const bool stringified_uid);
+    void joinChannel(const char *channel, const char *uid, const char *token, const bool stringified_uid);
     void leaveChannel();
     void enableExAudio(int sampleRate, int channels);
     void pushExAudio(void *rawdata, int samples);

@@ -45,16 +45,15 @@ void AgoraEngine::enableVideo()
     rtcEngine->enableVideo();
 }
 
-void AgoraEngine::joinChannel(const char *id, const char *uid, const char *token, const bool stringified_uid)
+void AgoraEngine::joinChannel(const char *channel, const char *uid, const char *token, const bool stringified_uid)
 {
     rtcEngine->setClientRole(CLIENT_ROLE_BROADCASTER);
 
-    // TODO Need to check if uid/channel valid
     if (stringified_uid) {
-        rtcEngine->joinChannelWithUserAccount(token, id, uid);
+        rtcEngine->joinChannelWithUserAccount(token, channel, uid);
     } else {
         uint32_t int_uid = static_cast<uint32_t>(std::stoul(uid));
-        rtcEngine->joinChannel(token, id, nullptr, int_uid);
+        rtcEngine->joinChannel(token, channel, nullptr, int_uid);
     }
 }
 

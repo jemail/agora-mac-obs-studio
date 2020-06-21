@@ -157,32 +157,35 @@ void AgoraInitWidget::on_request_button_clicked()
 
 void AgoraInitWidget::on_saveButton_clicked()
 {
-	QString strUrl = ui->url_lineEdit->text();
-	QString strUid = ui->uid_value->text();
-	bool withStringifiedUid = ui->stringified_checkbox->isChecked();
-	QString strToken = ui->token_lineEdit->text();
-	QString strAppid = ui->textEdit_appid->text();
-	QString strChannel = ui->textEdit_channel->text();
-	QString strResolution = ui->resolution_box->currentText();
+    QString strUrl = ui->url_lineEdit->text();
+    QString strUid = ui->uid_value->text();
+    bool withStringifiedUid = ui->stringified_checkbox->isChecked();
+    QString strToken = ui->token_lineEdit->text();
+    QString strAppid = ui->textEdit_appid->text();
+    QString strChannel = ui->textEdit_channel->text();
+    QString strResolution = ui->resolution_box->currentText();
 
     std::string input_url = QT_TO_UTF8(strUrl.trimmed());
-	std::string input_uid = QT_TO_UTF8(strUid.trimmed());
-	std::string input_appid = QT_TO_UTF8(strAppid.trimmed());
+    std::string input_uid = QT_TO_UTF8(strUid.trimmed());
+    std::string input_appid = QT_TO_UTF8(strAppid.trimmed());
     std::string input_token = QT_TO_UTF8(strToken.trimmed());
-	std::string input_channel = QT_TO_UTF8(strChannel.trimmed());
+    std::string input_channel = QT_TO_UTF8(strChannel.trimmed());
     std::string input_resolution = QT_TO_UTF8(strResolution.trimmed());
 
-	if (input_channel.empty() || input_channel.length() > 64)
+    if (input_channel.empty() || input_channel.length() > 64)
     {
-		QMessageBox::warning(this, QString("Warning"), QString("Please input valid channel for Agora"));
+        QMessageBox::warning(this, QString("Warning"), QString("Please input valid channel for Agora"));
     }
     else if (input_appid.empty() || input_appid.length() != 32)
     {
-		QMessageBox::warning(this, QString("Warning"), QString("Please input valid App ID"));
+        QMessageBox::warning(this, QString("Warning"), QString("Please input valid App ID"));
 	}
-	else if (!isAllDigit(input_uid) && !withStringifiedUid) {
-		QMessageBox::warning(this, QString("Warning"), QString("Please apply stringified option"));
-	}
+    else if (withStringifiedUid && input_uid.length() == 0) {
+        QMessageBox::warning(this, QString("Warning"), QString("Please apply valid uid"));
+    }
+    else if (input_uid.length() > 0 && !isAllDigit(input_uid) && !withStringifiedUid) {
+        QMessageBox::warning(this, QString("Warning"), QString("Please apply stringified option"));
+    }
     else
     {
 		app_id = input_appid;
@@ -198,7 +201,7 @@ void AgoraInitWidget::on_saveButton_clicked()
         {
             token = "";
         }
-        
+
         if (input_uid.length() > 0)
         {
             uid = input_uid;
@@ -208,8 +211,8 @@ void AgoraInitWidget::on_saveButton_clicked()
             uid = "";
         }
 
-		QDialog::done(QDialog::Accepted);
-	}
+        QDialog::done(QDialog::Accepted);
+    }
 
     char *path = os_get_agora_config_path_ptr("agora_obs_config.txt");
     cout << "agora config path " << path << endl;

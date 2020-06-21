@@ -114,6 +114,10 @@ static const char *agora_rawdata_getname(void *unused)
 static void agora_raw_output_update(void *data, obs_data_t *settings) {
     pre_stringified = obs_data_get_bool(settings, "ag_xx_stringified");
     pre_uid = obs_data_get_string(settings, "ag_xx_uid");
+    if (!pre_stringified && pre_uid.length() == 0) {
+        pre_uid = "0"; // specify default value
+    }
+
     pre_app_id = obs_data_get_string(settings, "ag_app_id");
     pre_app_token = obs_data_get_string(settings, "ag_xx_token");
     pre_app_channel = obs_data_get_string(settings, "ag_xx_channel");
